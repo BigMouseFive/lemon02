@@ -20,7 +20,7 @@ def mkdir(path):
         return False
 
 
-def LoginAccount(chrome, loginUri, account, password, percent, lowwer, currentDir):
+def LoginAccount(chrome, loginUri, account, password, percent, lowwer, delaytime, currentDir):
     # 获取email 和 password 控件
     print("登录账户")
     chrome.get(loginUri)
@@ -35,14 +35,14 @@ def LoginAccount(chrome, loginUri, account, password, percent, lowwer, currentDi
 
     while 1:
         try:
-            NewInventory(chrome, percent, lowwer, currentDir, account)
+            NewInventory(chrome, percent, lowwer, currentDir, account,delaytime)
         except:
             continue
 
 
-def NewInventory(chrome, percent, lowwer, currentDir, account):
+def NewInventory(chrome, percent, lowwer, currentDir, account,delaytime):
     print("打开改价页面")
-    global inventoryHandler
+    global inventoryHandler, unknownHandler
     path = currentDir + "\\data\\" + account
     mkdir(path)
     filepath = path + "\\UpdateRecord.txt"
@@ -56,16 +56,24 @@ def NewInventory(chrome, percent, lowwer, currentDir, account):
     except:
         attention = open(filepath, "x")
     loginHandler = chrome.current_window_handle
+    handlers = chrome.window_handles
+    print(type(loginHandler))
+    unknownHandler = ""
+    for handler in handlers:
+        if handler != loginHandler:
+            unknownHandler = handler
+            break
     readyUri = "https://sell.souq.com/inventory/inventory-management?tab=live"
     js = 'window.open("' + readyUri + '")'
     time.sleep(2)
     chrome.execute_script(js)
     handlers = chrome.window_handles
     for handler in handlers:
-        # print(handler)
-        if handler != loginHandler:
+        if handler != loginHandler and handler != unknownHandler:
             inventoryHandler = handler
             break
+
+
     while 1:
         chrome.switch_to_window(inventoryHandler)
         chrome.refresh()
@@ -76,6 +84,7 @@ def NewInventory(chrome, percent, lowwer, currentDir, account):
         try:
             OperateProduct(chrome, record, attention, index, pageCount, percent, lowwer)
         except:
+            time.sleep(delaytime*60)
             continue
 
 
@@ -187,7 +196,7 @@ def OperateProduct(chrome, record, attention, index, pageCount, percent, lowwer)
             pageCount = pageCount + 1
 
 
-def skr(account, password, currentDir, percent0 = 0.01, lowwer0 = 0):
+def skr(account, password, currentDir, delaytime=0, percent0=0.01, lowwer0=0):
     if not any(account) or not any(password):
         exit(0)
     percent = round(float(percent0), 2)
@@ -199,7 +208,7 @@ def skr(account, password, currentDir, percent0 = 0.01, lowwer0 = 0):
     print("----------------------")
     while 1:
         option = webdriver.ChromeOptions()
-        option.add_argument("headless")
+        #option.add_argument("headless")
         option.add_argument('--ignore-certificate-errors')
         option.add_argument(
             'user-agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko)'
@@ -216,6 +225,7 @@ def skr(account, password, currentDir, percent0 = 0.01, lowwer0 = 0):
                          password,
                          percent,
                          lowwer,
+                         delaytime,
                          currentDir)
         except:
             chrome.close()
