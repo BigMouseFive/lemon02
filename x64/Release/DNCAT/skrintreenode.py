@@ -79,21 +79,22 @@ def NewInventory(chrome, percent, lowwer, currentDir, account):
             continue
 
 
+def checkPage(driver):
+    checkPageFinishScript = "try {if (document.readyState !== 'complete') {return false;} if (window.jQuery) { if (" \
+                            "window.jQuery.active) { return false; } else if (window.jQuery.ajax && " \
+                            "window.jQuery.ajax.active) { return false; } } if (window.angular) { if (!window.qa) { " \
+                            "window.qa = {doneRendering: false }; } var injector = window.angular.element(" \
+                            "'body').injector(); var $rootScope = injector.get('$rootScope'); var $http = " \
+                            "injector.get('$http'); var $timeout = injector.get('$timeout'); if ($rootScope.$$phase " \
+                            "=== '$apply' || $rootScope.$$phase === '$digest' || $http.pendingRequests.length !== 0) " \
+                            "{ window.qa.doneRendering = false; return false; } if (!window.qa.doneRendering) { " \
+                            "$timeout(function() { window.qa.doneRendering = true;}, 0); return false;}} return " \
+                            "true;} catch (ex) {return false;} "
+    return driver.execute_script(checkPageFinishScript)
+
+
 def OperateProduct(chrome, record, attention, index, pageCount, percent, lowwer):
     global elemLeastDiv, elemSelf, elemLeast, elem
-
-    def checkPage(driver):
-        checkPageFinishScript = "try {if (document.readyState !== 'complete') {return false;} if (window.jQuery) { if (" \
-                                "window.jQuery.active) { return false; } else if (window.jQuery.ajax && " \
-                                "window.jQuery.ajax.active) { return false; } } if (window.angular) { if (!window.qa) { " \
-                                "window.qa = {doneRendering: false }; } var injector = window.angular.element(" \
-                                "'body').injector(); var $rootScope = injector.get('$rootScope'); var $http = " \
-                                "injector.get('$http'); var $timeout = injector.get('$timeout'); if ($rootScope.$$phase " \
-                                "=== '$apply' || $rootScope.$$phase === '$digest' || $http.pendingRequests.length !== 0) " \
-                                "{ window.qa.doneRendering = false; return false; } if (!window.qa.doneRendering) { " \
-                                "$timeout(function() { window.qa.doneRendering = true;}, 0); return false;}} return " \
-                                "true;} catch (ex) {return false;} "
-        return driver.execute_script(checkPageFinishScript)
     while 1:
         # 处理当前这一页
         # time.sleep(10)
@@ -143,14 +144,15 @@ def OperateProduct(chrome, record, attention, index, pageCount, percent, lowwer)
                 except:
                     continue
             persentPrice = divPrice * 100
-            out = "第" + str(pageCount) + "页, " + "第" + str(rowCount) + "项\t\t" + \
+            timestr = time.strftime("%Y-%m-%d %H:%M:%S")
+            out = timestr + "\t第" + str(pageCount) + "页, " + "第" + str(rowCount) + "项\t\t" + \
                   "原价:" + str(currentPrice) + "\t差价比:" + str(round(persentPrice, 2)) + "%\t修改后:" + str(leastPrice)
             if divPrice >= percent:
-                out = "第" + str(pageCount) + "页, " + "第" + str(rowCount) + "项\t\t" + \
+                out = timestr + "\t第" + str(pageCount) + "页, " + "第" + str(rowCount) + "项\t\t" + \
                       "原价:" + str(currentPrice) + "\t差价比:" + str(round(persentPrice, 2)) + "%\t未修改"
             print(out)
             elemProduct = elemIter.find_element_by_css_selector("td:nth-child(3) span")
-            out = str(pageCount) + "\t" + str(rowCount) + "\t" + str(currentPrice) + "\t" + \
+            out = timestr + "\t" + str(pageCount) + "\t" + str(rowCount) + "\t" + str(currentPrice) + "\t" + \
                   str(leastPrice) + "\t" + str(round(subPrice, 2)) + "\t" + str(round(persentPrice, 2)) + "%\t" + elemProduct.text
             if divPrice >= percent:
                 out = out + "\t未修改"
@@ -218,3 +220,5 @@ def skr(account, password, currentDir, percent0 = 0.01, lowwer0 = 0):
         except:
             chrome.close()
             continue
+
+skr("bestchoice_souq@126.com", "368120ba", "../")
