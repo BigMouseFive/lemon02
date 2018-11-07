@@ -49,6 +49,11 @@ char endTime[20];
 DWORD endtime;
 int total;
 int lastret;
+int maxtimes;
+float maxtprice;
+int mode;
+int minute;
+
 PyObject* StringToPy(std::string p_obj)
 {
 	int wlen = ::MultiByteToWideChar(CP_ACP, NULL, p_obj.c_str(), int(p_obj.size()), NULL, 0);
@@ -382,17 +387,15 @@ int aaabb(char **argv){
 	memset(currentDir, 0, sizeof(currentDir));
 	memset(execdir, 0, sizeof(execdir));
 	
-	//char* tmp0 = "bestchoice_souq@126.com";
 	char* tmp0 = argv[1];
 	memcpy(account, tmp0, strlen(tmp0));
-	//char* tmp1 = "368120ba";
 	char* tmp1 = argv[2];
 	percent = std::stof(string(argv[3]));
-	if (percent <= 0 || percent >= 0.7)
-		aabb(3);
 	lowwer = std::stof(string(argv[4]));
-	if (lowwer < 0)
-		aabb(4);
+	maxtimes = std::stoi(string(argv[5]));
+	maxtprice = std::stof(string(argv[6]));
+	mode = std::stoi(string(argv[7]));
+	minute = std::stoi(string(argv[8]));
 	memcpy(password, tmp1, strlen(tmp1));
 	char* tmp2 = "sys.path.append('";
 	memcpy(execdir, tmp2, strlen(tmp2));
@@ -412,6 +415,7 @@ int aaabb(char **argv){
 	strncat(execdir, currentDir, strlen(currentDir));
 	strncat(execdir, "/DNCAT", 6);
 	strncat(execdir, "')", 2);
+
 	return 0;
 }
 void aaaabb(){
@@ -443,20 +447,33 @@ void aaabbb(){
 		PyObject * pRet = NULL;
 		PyRun_SimpleString("import sys");
 		PyRun_SimpleString(AsciiToUtf8(execdir).c_str());
-		PyObject* pyArgv = PyTuple_New(5);
+		PyObject* pyArgv = PyTuple_New(8);
 		PyObject* pArg1 = Py_BuildValue("s", account);
 		PyObject* pArg2 = Py_BuildValue("s", password);
 		PyObject* pArg3 = StringToPy(currentDir);
 		PyObject* pArg4 = Py_BuildValue("f", percent);
 		PyObject* pArg5 = Py_BuildValue("f", lowwer);
+		PyObject* pArg6 = Py_BuildValue("i", maxtimes);
+		PyObject* pArg7 = Py_BuildValue("f", maxtprice);
+		PyObject* pArg8 = Py_BuildValue("i", minute);
 
 		PyTuple_SetItem(pyArgv, 0, pArg1);
 		PyTuple_SetItem(pyArgv, 1, pArg2);
 		PyTuple_SetItem(pyArgv, 2, pArg3);
 		PyTuple_SetItem(pyArgv, 3, pArg4);
 		PyTuple_SetItem(pyArgv, 4, pArg5);
+		PyTuple_SetItem(pyArgv, 5, pArg6);
+		PyTuple_SetItem(pyArgv, 6, pArg7);
+		PyTuple_SetItem(pyArgv, 7, pArg8);
+		if (mode == 0)
+			pModule = PyImport_ImportModule("skrintreenode"); //修改所有的产品。获取相同ean的所有产品的价格，取其中最低价（除去自己的价格）
+		else if (mode == 1)
+			pModule = PyImport_ImportModule("pointcetpets");  //修改所有的产品。如果有更低价，则取更低的价格为最低价；否则以自己的价格作为最低价
+		else if (mode == 2)
+			pModule = PyImport_ImportModule("teenlifeeasy");  //只修改有更低价的产品。以更低价为最低价
+		else if (mode == 3)
+			pModule = PyImport_ImportModule("carrymapstory"); //只修改没有更低价的产品。以自己的价格作为最低价
 
-		pModule = PyImport_ImportModule("skrintreenode");
 		if (pModule == nullptr){
 			printf("错误2\n");
 			return;
@@ -477,12 +494,8 @@ void aaabbb(){
 int main(int argc, char** argv)
 {
 #if 1
-	/*printf("请输入序列号：");
-	char a[40];
-	scanf(" %s", a);
-	string str(a);*/
-	string str = "IN2B9MIJKIBKCFIM68ZK";
-	ab(str, 2, 2);
+	string str = "29YH8KC5MDA7BK6N8232";
+	ab(str, 180, 10);
 	printf("%s\n", str.c_str());
 	system("PAUSE");
 	return 0;
@@ -494,7 +507,7 @@ int main(int argc, char** argv)
 	mode &= ~ENABLE_INSERT_MODE;      //移除插入模式
 	mode &= ~ENABLE_MOUSE_INPUT;
 	SetConsoleMode(hStdin, mode);
-	if (argc != 5)
+	if (argc != 9)
 		exit(0);
 	aaabb(argv);
 	aaaab();
