@@ -214,6 +214,7 @@ int aaaab(){
 		i++;
 		if (it >= '0' && it <= '9')	tmp = it - '0';
 		else if (it >= 'A' && it <= 'Z') tmp = it - 'A' + 10;
+		tmp++;
 		switch (i){
 		case 1:  show[7] = tmp; hide[7] = tmp; break;//A
 		case 2:  show[14] = tmp; hide[14] = tmp; break;//B
@@ -442,6 +443,8 @@ void aaabbb(){
 			printf("错误1\n");
 			return;
 		}
+		std::string a;
+		a.reserve();
 		PyObject * pModule = NULL;
 		PyObject * pFunc = NULL;
 		PyObject * pRet = NULL;
@@ -490,13 +493,89 @@ void aaabbb(){
 		printf("错误4\n");
 	}
 }
+//Administrator
+// C:\Users\Administrator\AppData\Local\Google\Chrome\User Data
+// 1 :GDND409AIE7D9Y894EWS DH90584GPDF5FGA8APQVKD0G8JEAEAL9 +
+// 2 :7DQ640MA3R8D938E9FBA DH9N584IPQG5FHA8HQQMKD3INJEAGA89 +
+// 3 :VD8D40NAHS2D958C71WS DH90594APRB5GBA97CQVLDSAGJEA8AN9 +
+// 4 :RD8740HATM2D998D89ES DH9U594CPLB5GBA9AKQVLDACCJEAAAN9 +
+// 5 :YD5740NA8SDD9K8944EC DH9U594EPRM5GMA98FQNLDNEKJEACA99 +
+// 6 :SD8E40JAEOED9U8A56ZE DH97594GPNN5GNA9BHQOLD0GIJEAEAS9 +
+// 7 :QDHB40KA6P5D9A8942QS DH9M594IPOE5GEA9CDQVLDXILJEAGAT9 +
+// 8 :BDE640DAPIGD958E91BG DH9N5A4APHQ5HPAA9CQPMDGA6JEA8AL9 +
+// 9 :BD5A409AHEDD998A59NK DH9F5A4CPDN5HMAA7KQRMDYC4JEAAAL9 +
+// 10:5DEJ40NAZSGD9J8NIBEM DH965A4EPRQ5HPAAMMQSMD2EKJEACAU9 +
+// 11:FDN640AAVF7D9J8D8BBK DH9N5A4GPEH5HGAAEMQRMD2G9JEAEAX9 +
+// 12:NDZC40JA5OBD958941TQ DH9T5A4IPNL5HKAACCQUMDRIKJEAGAV9 +
+// 13:FD2D40BATGCD998MH9WO DH905B4APFN5ILABHKQTNDSA4JEA8AX9 +
+// 14:JDEJ40AABFGD938GBFEU DH965B4CPER5IPABDQQWNDVC5JEAAAI9 +
+// 15:ODNH40FA6K7D9E8GBA86 DH9S5B4EPJI5IGABFLQKNDWECJEACAR9 + 
+// 16:GDW840CAOHAD948C78HC DH915B4GPGL5IJABDJQNND9GBJEAEAR9 +
+// za:IDTG40FAGK9D9K8KF45U DH9L5B4IPJK5IIABNFQWNDYIGJEAGAL9 +
+// ba:JDK640BAHG6D9T8IDDBU DH9N5C4APFI5JFACDOQWODDA4JEA8AC9 +
+// ne:4DT5408A8D9D9K894486 DH9G5C4CPCL5JIAC6FQKODFC3JEAAAX9 +
 
+
+#define STRCAT(a, b) a##b
+
+class base{
+public:
+	virtual int a() = 0;
+	static int b(){
+		printf("test\n");
+		return 1;
+	}
+};
+
+class base1 : public base{
+	
+};
+class base2 : public base{
+public:
+	virtual int a(){
+		printf("adsfsdf\n");
+		return 1;
+	}
+	static int b1(){
+		printf("test\n");
+		return 1;
+	}
+};
+
+// Admin
+static jmp_buf env;
 int main(int argc, char** argv)
 {
 #if 1
-	string str = "29YH8KC5MDA7BK6N8232";
-	ab(str, 180, 10);
-	printf("%s\n", str.c_str());
+	string str;
+	/*str = "GDND409AIE7D9Y894EWS"; ab(str, 356, 1); printf("%s\n", str.c_str());
+	str = "7DQ640MA3R8D938E9FBA"; ab(str, 356, 1); printf("%s\n", str.c_str());
+	str = "VD8D40NAHS2D958C71WS"; ab(str, 356, 1); printf("%s\n", str.c_str());
+	str = "RD8740HATM2D998D89ES"; ab(str, 356, 1); printf("%s\n", str.c_str());
+	str = "YD5740NA8SDD9K8944EC"; ab(str, 356, 1); printf("%s\n", str.c_str());
+	str = "SD8E40JAEOED9U8A56ZE"; ab(str, 356, 1); printf("%s\n", str.c_str());
+	str = "QDHB40KA6P5D9A8942QS"; ab(str, 356, 1); printf("%s\n", str.c_str());
+	str = "BDE640DAPIGD958E91BG"; ab(str, 356, 1); printf("%s\n", str.c_str());
+	str = "BD5A409AHEDD998A59NK"; ab(str, 356, 1); printf("%s\n", str.c_str());
+	str = "5DEJ40NAZSGD9J8NIBEM"; ab(str, 356, 1); printf("%s\n", str.c_str());
+	str = "FDN640AAVF7D9J8D8BBK"; ab(str, 356, 1); printf("%s\n", str.c_str());
+	str = "NDZC40JA5OBD958941TQ"; ab(str, 356, 1); printf("%s\n", str.c_str());
+	str = "FD2D40BATGCD998MH9WO"; ab(str, 356, 1); printf("%s\n", str.c_str());
+	str = "JDEJ40AABFGD938GBFEU"; ab(str, 356, 1); printf("%s\n", str.c_str());
+	str = "ODNH40FA6K7D9E8GBA86"; ab(str, 356, 1); printf("%s\n", str.c_str());
+	str = "GDW840CAOHAD948C78HC"; ab(str, 356, 1); printf("%s\n", str.c_str());
+	str = "IDTG40FAGK9D9K8KF45U"; ab(str, 356, 1); printf("%s\n", str.c_str());
+	str = "JDK640BAHG6D9T8IDDBU"; ab(str, 356, 1); printf("%s\n", str.c_str());
+	str = "4DT5408A8D9D9K894486"; ab(str, 356, 1); printf("%s\n", str.c_str());*///nancy 4/10
+	//str = "9GZGG4N6JG9NFHIE7314"; ab(str, 30, 1); printf("%s\n", str.c_str());  //夏天  4/23
+	//str = "EFE84A8DMD1EI36F5EKE"; ab(str, 30, 1); printf("%s\n", str.c_str());  //夏天  4/26
+	//str = "FA0GHAS6HK8JJA7QG11I"; ab(str, 185, 1); printf("%s\n", str.c_str()); tina 本地电脑  已经删除
+	//str = "UE9G52LB2P2IAV9HB668"; ab(str, 185, 1); printf("%s\n", str.c_str());
+	//str = "LE3K52HBTLCIAQ9OI5IG"; ab(str, 185, 1); printf("%s\n", str.c_str());
+	//str = "4ES6IA0JWR6DHT6I8CKU"; ab(str, 366, 1); printf("%s\n", str.c_str());
+	//str = "FGLHBGJHVHGWG7BM97F2"; ab(str, 31, 1); printf("%s\n", str.c_str());
+	str = "AERD52CBSG8IAL9F94XO"; ab(str, 335, 1); printf("%s\n", str.c_str());
+	
 	system("PAUSE");
 	return 0;
 #else

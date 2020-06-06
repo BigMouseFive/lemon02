@@ -153,7 +153,7 @@ def OperateProduct(chrome, record, attention, index, pageCount, percent, lowwer,
             #   dictean:  {"ean0": {"ts": num, "fp": fprice, "tp": tpric, "lprice": lprice},
             flag = True
             if strean in dictean:
-                if dictean[strean]["times"] > maxtimes or dictean[strean]["tprice"] > maxtprice:
+                if dictean[strean]["times"] >= maxtimes or dictean[strean]["tprice"] >= maxtprice:
                     flag = False
             if divPrice <= percent and flag:
                 # 修改数据
@@ -239,7 +239,7 @@ def OperateProduct(chrome, record, attention, index, pageCount, percent, lowwer,
             pageCount = pageCount + 1
 
 
-def skr(account, password, currentDir, percent0=0.1, lowwer0=0.01, maxtimes=1, maxtprice0=0.3, minute=1):
+def skr(account, password, currentDir, percent0=0.14, lowwer0=0.01, maxtimes=1, maxtprice0=0.17, minute=1):
     if not any(account) or not any(password):
         exit(0)
     percent = round(float(percent0), 2)
@@ -257,7 +257,7 @@ def skr(account, password, currentDir, percent0=0.1, lowwer0=0.01, maxtimes=1, m
     dictean = {}
     while 1:
         option = webdriver.ChromeOptions()
-        option.add_argument("headless")
+        #option.add_argument("headless")
         option.add_argument('--ignore-certificate-errors')
         option.add_argument('log-level=3')
         option.add_argument('lang=zh_CN.UTF-8')
