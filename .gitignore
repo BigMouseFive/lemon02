@@ -12,3 +12,6 @@ ipch
 *.opensdf
 GeneratedFiles
 *.exe
+*.tlog
+*.idb
+*.pdb
