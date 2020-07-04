@@ -2,10 +2,11 @@
 *.out
 *.sdf
 *.APS
-Lemon02/Debug
-Lemon02/Release
-Lemon02/x64
+lemon02/Debug
+lemon02/Release
+lemon02/x64
 x64/Debug
+x64/Release
 ipch
 *.suo
 *.user
