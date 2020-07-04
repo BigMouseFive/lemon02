@@ -11,7 +11,7 @@
 #include <iostream>
 #include <fstream>
 #include <string>
-#include "Python.h"
+//#include "Python.h"
 
 using namespace std;
 
@@ -54,16 +54,16 @@ float maxtprice;
 int mode;
 int minute;
 
-PyObject* StringToPy(std::string p_obj)
-{
-	int wlen = ::MultiByteToWideChar(CP_ACP, NULL, p_obj.c_str(), int(p_obj.size()), NULL, 0);
-	wchar_t* wszString = new wchar_t[wlen + 1];
-	::MultiByteToWideChar(CP_ACP, NULL, p_obj.c_str(), int(p_obj.size()), wszString, wlen);
-	wszString[wlen] = '\0';
-	PyObject* pb = PyUnicode_FromUnicode((const Py_UNICODE*)wszString, wlen);
-	delete []wszString;
-	return pb;
-}
+//PyObject* StringToPy(std::string p_obj)
+//{
+//	int wlen = ::MultiByteToWideChar(CP_ACP, NULL, p_obj.c_str(), int(p_obj.size()), NULL, 0);
+//	wchar_t* wszString = new wchar_t[wlen + 1];
+//	::MultiByteToWideChar(CP_ACP, NULL, p_obj.c_str(), int(p_obj.size()), wszString, wlen);
+//	wszString[wlen] = '\0';
+//	PyObject* pb = PyUnicode_FromUnicode((const Py_UNICODE*)wszString, wlen);
+//	delete []wszString;
+//	return pb;
+//}
 /***
 123456789ABC
 ABCDEFGHIJKL
@@ -437,61 +437,61 @@ void aaaabbb(){
 
 }
 void aaabbb(){
-	try{
-		Py_Initialize();
-		if (!Py_IsInitialized()){
-			printf("错误1\n");
-			return;
-		}
-		std::string a;
-		a.reserve();
-		PyObject * pModule = NULL;
-		PyObject * pFunc = NULL;
-		PyObject * pRet = NULL;
-		PyRun_SimpleString("import sys");
-		PyRun_SimpleString(AsciiToUtf8(execdir).c_str());
-		PyObject* pyArgv = PyTuple_New(8);
-		PyObject* pArg1 = Py_BuildValue("s", account);
-		PyObject* pArg2 = Py_BuildValue("s", password);
-		PyObject* pArg3 = StringToPy(currentDir);
-		PyObject* pArg4 = Py_BuildValue("f", percent);
-		PyObject* pArg5 = Py_BuildValue("f", lowwer);
-		PyObject* pArg6 = Py_BuildValue("i", maxtimes);
-		PyObject* pArg7 = Py_BuildValue("f", maxtprice);
-		PyObject* pArg8 = Py_BuildValue("i", minute);
+	//try{
+	//	Py_Initialize();
+	//	if (!Py_IsInitialized()){
+	//		printf("错误1\n");
+	//		return;
+	//	}
+	//	std::string a;
+	//	a.reserve();
+	//	PyObject * pModule = NULL;
+	//	PyObject * pFunc = NULL;
+	//	PyObject * pRet = NULL;
+	//	PyRun_SimpleString("import sys");
+	//	PyRun_SimpleString(AsciiToUtf8(execdir).c_str());
+	//	PyObject* pyArgv = PyTuple_New(8);
+	//	PyObject* pArg1 = Py_BuildValue("s", account);
+	//	PyObject* pArg2 = Py_BuildValue("s", password);
+	//	PyObject* pArg3 = StringToPy(currentDir);
+	//	PyObject* pArg4 = Py_BuildValue("f", percent);
+	//	PyObject* pArg5 = Py_BuildValue("f", lowwer);
+	//	PyObject* pArg6 = Py_BuildValue("i", maxtimes);
+	//	PyObject* pArg7 = Py_BuildValue("f", maxtprice);
+	//	PyObject* pArg8 = Py_BuildValue("i", minute);
 
-		PyTuple_SetItem(pyArgv, 0, pArg1);
-		PyTuple_SetItem(pyArgv, 1, pArg2);
-		PyTuple_SetItem(pyArgv, 2, pArg3);
-		PyTuple_SetItem(pyArgv, 3, pArg4);
-		PyTuple_SetItem(pyArgv, 4, pArg5);
-		PyTuple_SetItem(pyArgv, 5, pArg6);
-		PyTuple_SetItem(pyArgv, 6, pArg7);
-		PyTuple_SetItem(pyArgv, 7, pArg8);
-		if (mode == 0)
-			pModule = PyImport_ImportModule("skrintreenode"); //修改所有的产品。获取相同ean的所有产品的价格，取其中最低价（除去自己的价格）
-		else if (mode == 1)
-			pModule = PyImport_ImportModule("pointcetpets");  //修改所有的产品。如果有更低价，则取更低的价格为最低价；否则以自己的价格作为最低价
-		else if (mode == 2)
-			pModule = PyImport_ImportModule("teenlifeeasy");  //只修改有更低价的产品。以更低价为最低价
-		else if (mode == 3)
-			pModule = PyImport_ImportModule("carrymapstory"); //只修改没有更低价的产品。以自己的价格作为最低价
+	//	PyTuple_SetItem(pyArgv, 0, pArg1);
+	//	PyTuple_SetItem(pyArgv, 1, pArg2);
+	//	PyTuple_SetItem(pyArgv, 2, pArg3);
+	//	PyTuple_SetItem(pyArgv, 3, pArg4);
+	//	PyTuple_SetItem(pyArgv, 4, pArg5);
+	//	PyTuple_SetItem(pyArgv, 5, pArg6);
+	//	PyTuple_SetItem(pyArgv, 6, pArg7);
+	//	PyTuple_SetItem(pyArgv, 7, pArg8);
+	//	if (mode == 0)
+	//		pModule = PyImport_ImportModule("skrintreenode"); //修改所有的产品。获取相同ean的所有产品的价格，取其中最低价（除去自己的价格）
+	//	else if (mode == 1)
+	//		pModule = PyImport_ImportModule("pointcetpets");  //修改所有的产品。如果有更低价，则取更低的价格为最低价；否则以自己的价格作为最低价
+	//	else if (mode == 2)
+	//		pModule = PyImport_ImportModule("teenlifeeasy");  //只修改有更低价的产品。以更低价为最低价
+	//	else if (mode == 3)
+	//		pModule = PyImport_ImportModule("carrymapstory"); //只修改没有更低价的产品。以自己的价格作为最低价
 
-		if (pModule == nullptr){
-			printf("错误2\n");
-			return;
-		}
-		pFunc = PyObject_GetAttrString(pModule, "skr");
-		if (pFunc == nullptr){
-			printf("错误3\n");
-			return;
-		}
-		PyEval_CallObject(pFunc, pyArgv);
-		Py_Finalize();
-	}
-	catch(...){
-		printf("错误4\n");
-	}
+	//	if (pModule == nullptr){
+	//		printf("错误2\n");
+	//		return;
+	//	}
+	//	pFunc = PyObject_GetAttrString(pModule, "skr");
+	//	if (pFunc == nullptr){
+	//		printf("错误3\n");
+	//		return;
+	//	}
+	//	PyEval_CallObject(pFunc, pyArgv);
+	//	Py_Finalize();
+	//}
+	//catch(...){
+	//	printf("错误4\n");
+	//}
 }
 //Administrator
 // C:\Users\Administrator\AppData\Local\Google\Chrome\User Data
@@ -572,9 +572,12 @@ int main(int argc, char** argv)
 	//str = "FA0GHAS6HK8JJA7QG11I"; ab(str, 185, 1); printf("%s\n", str.c_str()); tina 本地电脑  已经删除
 	//str = "UE9G52LB2P2IAV9HB668"; ab(str, 185, 1); printf("%s\n", str.c_str());
 	//str = "LE3K52HBTLCIAQ9OI5IG"; ab(str, 185, 1); printf("%s\n", str.c_str());
-	//str = "4ES6IA0JWR6DHT6I8CKU"; ab(str, 366, 1); printf("%s\n", str.c_str());
+	//str = "4ES6IA0JWR6DHT6I8CKU"; ab(str, 170, 1); printf("%s\n", str.c_str());
 	//str = "FGLHBGJHVHGWG7BM97F2"; ab(str, 31, 1); printf("%s\n", str.c_str());
-	str = "AERD52CBSG8IAL9F94XO"; ab(str, 335, 1); printf("%s\n", str.c_str());
+	//str = "AERD52CBSG8IAL9F94XO"; ab(str, 335, 1); printf("%s\n", str.c_str());
+	str = "VL6BBCRIRPC5D5EJ87YA"; ab(str, 93, 1); printf("%s\n", str.c_str());
+	str = "QEAIIATJWKCDHT6RHCKG"; ab(str, 93, 1); printf("%s\n", str.c_str());
+	str = "RBF5A4R5TQ3PD7AHA136"; ab(str, 93, 1); printf("%s\n", str.c_str());
 	
 	system("PAUSE");
 	return 0;
